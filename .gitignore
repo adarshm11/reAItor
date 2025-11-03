@@ -1,0 +1,139 @@
+# ===========================
+# Python / Backend
+# ===========================
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ===========================
+# Node.js / Frontend
+# ===========================
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Testing
+/coverage
+
+# Next.js
+.next/
+/out/
+
+# Production
+/build
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel
+
+# ===========================
+# Environment & Secrets
+# ===========================
+.python-version
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# ===========================
+# Databases
+# ===========================
+
+# ChromaDB
+chroma_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# ===========================
+# IDEs & Editors
+# ===========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ===========================
+# OS
+# ===========================
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# Logs
+# ===========================
+
+*.log
+logs/
+npm-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================
+# Playwright
+# ===========================
+
+playwright/.cache/
+test-results/
+playwright-report/
