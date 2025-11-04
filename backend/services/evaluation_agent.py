@@ -145,6 +145,29 @@ Also provide:
     ) -> str:
         """Create prompt for the evaluation agent"""
 
+        # Helper function to format optional numeric fields
+        def format_number(value, format_str=","):
+            if value is None:
+                return "Not specified"
+            return f"{value:{format_str}}"
+
+        # Format budget range
+        budget_str = "Not specified"
+        if preferences.price_min is not None or preferences.price_max is not None:
+            min_str = f"${preferences.price_min:,}" if preferences.price_min is not None else "No minimum"
+            max_str = f"${preferences.price_max:,}" if preferences.price_max is not None else "No maximum"
+            budget_str = f"{min_str} - {max_str}"
+
+        # Format bedroom range
+        bedroom_str = "Not specified"
+        if preferences.bedrooms_min is not None or preferences.bedrooms_max is not None:
+            min_bed = preferences.bedrooms_min if preferences.bedrooms_min is not None else "Any"
+            max_bed = preferences.bedrooms_max if preferences.bedrooms_max is not None else "Any"
+            bedroom_str = f"{min_bed}-{max_bed}"
+
+        # Format bathroom minimum
+        bathroom_str = f"{preferences.bathrooms_min}+" if preferences.bathrooms_min is not None else "Not specified"
+
         prompt = f"""
 Please evaluate this property listing:
 
@@ -159,13 +182,13 @@ PROPERTY DETAILS:
 - Days on Market: {listing.days_on_market or 'N/A'}
 
 USER PREFERENCES:
-- Budget: ${preferences.price_min:,} - ${preferences.price_max:,}
-- Location: {preferences.location}
-- Bedrooms: {preferences.bedrooms_min}-{preferences.bedrooms_max}
-- Bathrooms: {preferences.bathrooms_min}+
-- Must-Have Features: {', '.join(preferences.must_have_features or [])}
-- Deal Breakers: {', '.join(preferences.deal_breakers or [])}
-- Lifestyle Priorities: {', '.join(preferences.lifestyle_priorities or [])}
+- Budget: {budget_str}
+- Location: {preferences.location or 'Not specified'}
+- Bedrooms: {bedroom_str}
+- Bathrooms: {bathroom_str}
+- Must-Have Features: {', '.join(preferences.must_have_features or []) or 'None specified'}
+- Deal Breakers: {', '.join(preferences.deal_breakers or []) or 'None specified'}
+- Lifestyle Priorities: {', '.join(preferences.lifestyle_priorities or []) or 'None specified'}
 
 NEIGHBORHOOD DATA:
 {json.dumps(external_data, indent=2)}

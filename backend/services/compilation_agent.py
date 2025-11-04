@@ -114,6 +114,21 @@ Be objective, balanced, and data-driven. Consider both quantitative scores and q
         preferences: UserPreferences
     ) -> str:
         """Create prompt for compilation"""
+
+        # Format budget range
+        budget_str = "Not specified"
+        if preferences.price_min is not None or preferences.price_max is not None:
+            min_str = f"${preferences.price_min:,}" if preferences.price_min is not None else "No minimum"
+            max_str = f"${preferences.price_max:,}" if preferences.price_max is not None else "No maximum"
+            budget_str = f"{min_str} - {max_str}"
+
+        # Format bedroom range
+        bedroom_str = "Not specified"
+        if preferences.bedrooms_min is not None or preferences.bedrooms_max is not None:
+            min_bed = preferences.bedrooms_min if preferences.bedrooms_min is not None else "Any"
+            max_bed = preferences.bedrooms_max if preferences.bedrooms_max is not None else "Any"
+            bedroom_str = f"{min_bed}-{max_bed}"
+
         return f"""
 Please compile a final report for this property:
 
@@ -124,9 +139,9 @@ Type: {listing.property_type}
 Specs: {listing.bedrooms} bed, {listing.bathrooms} bath, {listing.sqft:,} sqft
 
 BUYER PREFERENCES:
-Budget: ${preferences.price_min:,} - ${preferences.price_max:,}
-Location: {preferences.location}
-Size: {preferences.bedrooms_min}-{preferences.bedrooms_max} bedrooms
+Budget: {budget_str}
+Location: {preferences.location or 'Not specified'}
+Size: {bedroom_str} bedrooms
 Must-Have: {', '.join(preferences.must_have_features or ['None'])}
 Deal Breakers: {', '.join(preferences.deal_breakers or ['None'])}
 

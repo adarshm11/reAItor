@@ -113,6 +113,24 @@ Each argument should reference actual property features, data, or market conside
         preferences: UserPreferences
     ) -> str:
         """Create context for argumentation"""
+
+        # Format budget range
+        budget_str = "Not specified"
+        if preferences.price_min is not None or preferences.price_max is not None:
+            min_str = f"${preferences.price_min:,}" if preferences.price_min is not None else "No minimum"
+            max_str = f"${preferences.price_max:,}" if preferences.price_max is not None else "No maximum"
+            budget_str = f"{min_str} - {max_str}"
+
+        # Format bedroom range
+        bedroom_str = "Not specified"
+        if preferences.bedrooms_min is not None or preferences.bedrooms_max is not None:
+            min_bed = preferences.bedrooms_min if preferences.bedrooms_min is not None else "Any"
+            max_bed = preferences.bedrooms_max if preferences.bedrooms_max is not None else "Any"
+            bedroom_str = f"{min_bed}-{max_bed}"
+
+        # Format bathroom minimum
+        bathroom_str = f"{preferences.bathrooms_min}+" if preferences.bathrooms_min is not None else "Not specified"
+
         return f"""
 PROPERTY LISTING:
 Address: {listing.address}
@@ -123,9 +141,9 @@ Description: {listing.description}
 Days on Market: {listing.days_on_market or 'N/A'}
 
 BUYER PREFERENCES:
-Budget: ${preferences.price_min:,} - ${preferences.price_max:,}
-Location: {preferences.location}
-Desired Size: {preferences.bedrooms_min}-{preferences.bedrooms_max} bedrooms, {preferences.bathrooms_min}+ bathrooms
+Budget: {budget_str}
+Location: {preferences.location or 'Not specified'}
+Desired Size: {bedroom_str} bedrooms, {bathroom_str} bathrooms
 Must-Have Features: {', '.join(preferences.must_have_features or ['None specified'])}
 Deal Breakers: {', '.join(preferences.deal_breakers or ['None specified'])}
 Lifestyle Priorities: {', '.join(preferences.lifestyle_priorities or ['None specified'])}
